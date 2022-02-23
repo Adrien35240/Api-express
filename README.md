@@ -1,6 +1,15 @@
 ## initial routes
 - /api
 - /api/item
+
+## INSTALL
+COPY sqitch.conf.example in sqitch.conf
+
+COPY .env.example in .env
+
+docker-compose up -d
+
+sqitch deploy
 ## Scripts :
 - ### Start Production
         npm start
