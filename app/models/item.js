@@ -4,6 +4,7 @@ const client = require('../config/postgres');
 /**
  * @typedef {object} Item
  * @property {number} id - Indentifiant unique, Pk de la table
+ * @property {string} label - label of item
  */
 
 module.exports = {
@@ -17,7 +18,7 @@ module.exports = {
   },
 
   /**
-   * Récupère par sont id
+   * Récupère par son id
    * @param {number} itemId - L'id de la item souhaitée
    * @returns {(Item|undefined)} - La Item souhaitée ou undefined si aucune Item à cet id
    */

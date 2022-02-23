@@ -1,5 +1,4 @@
-# in progress
-### initial routes
+## initial routes
 - /api
 - /api/item
 ## Scripts :

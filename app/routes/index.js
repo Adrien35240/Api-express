@@ -15,19 +15,11 @@ router
   /**
    * GET /api/item
    * @summary Get all items
-   * @tags Post
+   * @tags Item
    * @return {[Item]} 200 - success response - application/json
    */
   .get(controllerHandler(itemController.getAll));
-/**
-   * POST /api/item
-   * @summary Create a item
-   * @tags Item
-   * @param {InputItem} request.body.required - post info
-   * @return {Item} 200 - success response - application/json
-   * @return {ApiError} 400 - Bad request response - application/json
-   */
-// .post(validate('body', schemaCreate), controllerHandler(controller.create));
+
 router.route('/api').get(controllerHandler(apiController.home));
 router.use((err, _, response, next) => {
   errorHandler(err, response, next);

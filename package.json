@@ -7,7 +7,9 @@
     "start": "node .",
     "dev": "DEBUG=*,-express:*,-nodemon*,-body-parser:* npx nodemon",
     "lint": "npx eslint . --fix",
-    "prettier": "npx prettier --write ."
+    "prettier": "npx prettier --write .",
+    "test": "jest",
+    "test:watch": "jest --coverage --watchAll"
   },
   "repository": {
     "type": "git",

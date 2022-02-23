@@ -3,8 +3,8 @@ const expressJSDocSwagger = require('express-jsdoc-swagger');
 const options = {
   info: {
     version: '1.0.0',
-    title: "O'blog",
-    description: "Blog de l'école O'clock",
+    title: "Template API",
+    description: "Documentation du Template api",
   },
   baseDir: __dirname,
   // On analyse tous les fichiers du projet
