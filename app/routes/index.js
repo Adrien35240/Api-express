@@ -3,11 +3,12 @@ const { errorHandler } = require('../helpers/errorHandler');
 
 const router = express.Router();
 
+const { itemController } = require('../controllers');
+const controllerHandler = require('../helpers/apiControllerHandler');
+const { apiController } = require('../controllers');
+
 // const validate = require('../validation/validator');
 // const {schemaCreate} = require('../validation/schemas/index');
-
-const { postController: controller } = require('../controllers');
-const controllerHandler = require('../helpers/apiControllerHandler');
 
 router
   .route('/api/item')
@@ -17,8 +18,8 @@ router
    * @tags Post
    * @return {[Item]} 200 - success response - application/json
    */
-  .get(controllerHandler(controller.getAll))
-  /**
+  .get(controllerHandler(itemController.getAll));
+/**
    * POST /api/item
    * @summary Create a item
    * @tags Item
@@ -26,8 +27,8 @@ router
    * @return {Item} 200 - success response - application/json
    * @return {ApiError} 400 - Bad request response - application/json
    */
-  .post(validate('body', schemaCreate), controllerHandler(controller.create));
-
+// .post(validate('body', schemaCreate), controllerHandler(controller.create));
+router.route('/api').get(controllerHandler(apiController.home));
 router.use((err, _, response, next) => {
   errorHandler(err, response, next);
 });

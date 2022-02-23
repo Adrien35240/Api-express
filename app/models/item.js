@@ -12,17 +12,17 @@ module.exports = {
    * @returns {Item[]} - Tous les items dans la base de donnée
    */
   async findAll() {
-    const result = await client.query('SELECT * FROM "rando"');
+    const result = await client.query('SELECT * FROM "item"');
     return result.rows;
   },
 
   /**
    * Récupère par sont id
-   * @param {number} itemId - L'id de la rando souhaitée
-   * @returns {(Item|undefined)} - La Rando souhaitée ou undefined si aucune Rando à cet id
+   * @param {number} itemId - L'id de la item souhaitée
+   * @returns {(Item|undefined)} - La Item souhaitée ou undefined si aucune Item à cet id
    */
   async findByPk(itemId) {
-    const result = await client.query('SELECT * FROM "rando" WHERE id = $1', [itemId]);
+    const result = await client.query('SELECT * FROM "item" WHERE id = $1', [itemId]);
 
     if (result.rowCount === 0) {
       return null;

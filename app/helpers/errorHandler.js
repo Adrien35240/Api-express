@@ -4,8 +4,7 @@
  * en cas de passage d'erreur à la function next()
  */
 const logger = require('./logger');
-const ApiError = require('../errors/apiError');
-const WebsiteError = require('../errors/websiteError');
+const ApiError = require('../errors/apiErrors');
 
 /**
  * Middleware that respond to a next method with an error as argument
