@@ -6,6 +6,11 @@ const client = require('../config/postgres');
  * @property {number} id - Indentifiant unique, Pk de la table
  * @property {string} label - label of item
  */
+/**
+ * @typedef {object} InputItem
+ * @property {number} id - Indentifiant unique, Pk de la table
+ * @property {string} label - label of item
+ */
 
 module.exports = {
   /**
@@ -31,6 +36,29 @@ module.exports = {
 
     return result.rows[0];
   },
-  // ex catching error
-  // throw new ApiError(400, 'message');
+  /**
+ * Récupère par son label
+ * @param {number} itemLabel - Le label de l'item souhaitée
+ * @returns {(Item|undefined)} - L'Item souhaitée ou undefined si aucune Item à ce label
+ */
+  async findByLabel(itemLabel) {
+    console.log('find', itemLabel);
+    const result = await client.query(`SELECT * FROM item WHERE label = '${itemLabel}';`);
+
+    if (result.rowCount === 0) {
+      return null;
+    }
+
+    return result.rows[0];
+  },
+  /**
+ * Ajoute dans la base de données
+ * @param {InputItem} item - Les données à insérer
+ * @returns {Item} - Le Post inséré
+ */
+  async insert(item) {
+    const savedPost = await client.query(`INSERT INTO item(label) VALUES('${item.label}');`);
+
+    return savedPost.rows[0];
+  },
 };
