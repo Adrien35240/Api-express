@@ -7,8 +7,7 @@ const { itemController } = require('../controllers');
 const controllerHandler = require('../helpers/apiControllerHandler');
 const { apiController } = require('../controllers');
 
-const validate = require('../validation/validator');
-const { schemaCreate } = require('../validation/schemas/itemCreateSchema');
+const { createItemSchema } = require('../validation/validator');
 
 router
   .route('/api/item')
@@ -20,14 +19,14 @@ router
    */
   .get(controllerHandler(itemController.getAll))
   /**
- * POST /api/item
- * @summary Post a item
- * @tags Item
- * @param {InputItem} request.body.required - item infos
- * @return {[Item]} 200 - success response - application/json
- * @return {ApiError} 400 - Bad request response - application/json
- */
-  .post(controllerHandler(itemController.create));
+   * POST /api/item
+   * @summary Post a item
+   * @tags Item
+   * @param {InputItem} request.body.required - item infos
+   * @return {[Item]} 200 - success response - application/json
+   * @return {ApiError} 400 - Bad request response - application/json
+   */
+  .post(createItemSchema, controllerHandler(itemController.create));
 
 router.route('/api').get(controllerHandler(apiController.home));
 router.use((err, _, response, next) => {

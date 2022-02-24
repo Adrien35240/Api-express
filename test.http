@@ -21,3 +21,10 @@ content-type: application/json
 {
     "label": "item2"
 }
+### Créer un mauvais item
+POST {{ endpoint-dev }}/api/item
+content-type: application/json
+
+{
+    "label": 2222
+}

@@ -1,27 +1,32 @@
-const debug = require('debug')('Validator:log');
-const { ApiError } = require('../helpers/errorHandler');
+const Joi = require('joi');
 
-/**
- * Générateur de middleware pour la validation
- * d'un objet d'un des propriété de la requête
- * @param {string} prop - Nom de la propriété de l'objet request à valider
- * @param {Joi.object} schema - Le schema de validation du module Joi
- * @returns {Function} -
- * Renvoi un middleware pour express qui valide
- * le corp de la requête en utilisant le schema passé en paramètre.
- * Renvoi une erreur 400 si la validation échoue.
- */
-module.exports = (prop, schema) => async (request, _, next) => {
-  try {
-    // la "value" on s'en fiche on la récupère pas
-    // request['body'] == request.body
-    debug(request[prop]);
-    await schema.validateAsync(request[prop]);
+function createItemSchema(req, res, next) {
+  // define base schema rules
+  const schemaRules = {
+    label: Joi.string().required(),
+  };
+
+  // create schema object with rules
+  const schema = Joi.object(schemaRules);
+
+  // schema options
+  const options = {
+    abortEarly: false, // include all errors
+    allowUnknown: true, // ignore unknown props
+    stripUnknown: true, // remove unknown props
+  };
+
+  // validate request body against schema
+  const { error, value } = schema.validate(req.body, options);
+
+  if (error) {
+    // on fail return comma separated errors
+    next(`Validation error: ${error.details.map((x) => x.message).join(', ')}`);
+  } else {
+    // on success replace req.body with validated value and trigger next middleware function
+    req.body = value;
     next();
-  } catch (error) {
-    // Je dois afficher l'erreur à l'utilisateur
-    // STATUS HTTP pour une erreur de saise : 400
-    // On réabille l'erreur en suivant notre propre normalisation
-    next(new ApiError(400, error.details[0].message));
   }
-};
+}
+
+module.exports = { createItemSchema };
